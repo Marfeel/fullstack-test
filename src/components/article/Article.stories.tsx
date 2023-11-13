@@ -1,36 +1,36 @@
-import { ComponentMeta } from '@storybook/react';
+import { ComponentMeta } from "@storybook/react";
 
-import { Article as ArticleComponent, ArticleProps } from './Article';
+import { Article as ArticleComponent, ArticleProps } from "./Article";
 
 export default {
-  title: 'Article',
+  title: "Article",
   component: ArticleComponent,
   argTypes: {
     author: {
       control: {
-        type: 'text'
+        type: "text",
       },
-      defaultValue: 'Title',
+      defaultValue: "Title",
     },
     url: {
       control: {
-        type: 'text'
+        type: "text",
       },
-      defaultValue: 'https://url.com',
+      defaultValue: "https://url.com",
     },
     image: {
       control: {
-        type: 'text'
+        type: "text",
       },
-      defaultValue: 'https://picsum.photos/600/400',
+      defaultValue: "https://picsum.photos/600/400",
     },
     traffic: {
       control: {
-        type: 'number'
+        type: "number",
       },
       defaultValue: 12345,
-    }
+    },
   },
 } as ComponentMeta<typeof ArticleComponent>;
 
-export const article = (args: ArticleProps) => <ArticleComponent { ...args } />;
+export const article = (args: ArticleProps) => <ArticleComponent {...args} />;
