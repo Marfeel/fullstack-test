@@ -25,7 +25,10 @@ const calculateTotalTraffic = (articles: ArticleData[]): ArticleWithTotal[] => {
   });
 };
 
-const analyseData = async (timeframe: string): Promise<TrafficData> => {
+const analyseData = async (
+  timeframe: string,
+  articleId?: string
+): Promise<TrafficData> => {
   let traffic: TrafficData = {};
   if (timeframe === "today" || timeframe === "yesterday") {
     const currentDate = new Date();
@@ -37,13 +40,14 @@ const analyseData = async (timeframe: string): Promise<TrafficData> => {
     const day = currentDate.getDate();
 
     data.traffic_data.forEach((article) => {
-      article.daily_traffic.forEach((daily) => {
-        if (daily.day === day) {
-          daily.hourly_traffic.forEach((t) => {
-            traffic[t.hour.toString()] += t.traffic;
-          });
-        }
-      });
+      if ((articleId && article.id === articleId) || !articleId)
+        article.daily_traffic.forEach((daily) => {
+          if (daily.day === day) {
+            daily.hourly_traffic.forEach((t) => {
+              traffic[t.hour.toString()] += t.traffic;
+            });
+          }
+        });
     });
   } else if (timeframe === "last week" || timeframe === "this month") {
     const days =
@@ -51,13 +55,14 @@ const analyseData = async (timeframe: string): Promise<TrafficData> => {
     days.forEach((day) => (traffic[day] = 0));
 
     data.traffic_data.forEach((article) => {
-      article.daily_traffic.forEach((daily) => {
-        if (days.includes(daily.day)) {
-          daily.hourly_traffic.forEach((t) => {
-            traffic[daily.day.toString()] += t.traffic;
-          });
-        }
-      });
+      if ((articleId && article.id === articleId) || !articleId)
+        article.daily_traffic.forEach((daily) => {
+          if (days.includes(daily.day)) {
+            daily.hourly_traffic.forEach((t) => {
+              traffic[daily.day.toString()] += t.traffic;
+            });
+          }
+        });
     });
   } else {
     throw new Error("Invalid timeframe specified");
