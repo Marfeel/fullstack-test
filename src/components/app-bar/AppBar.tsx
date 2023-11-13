@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import MuiAppBar from "@mui/material/AppBar";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
@@ -8,7 +8,7 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const StyledAppBar = styled(MuiAppBar)`
   padding: 12px 30px;
@@ -19,45 +19,61 @@ export type AppBarProps = {
   title: string;
 };
 
-export const AppBar = ({ title }: AppBarProps) => {
-  const [selectedValue, setSelectedValue] = useState<number | string>("today");
-  const navigate = useNavigate();
+export enum Timeframe {
+  Today = "today",
+  Yesterday = "yesterday",
+  LastWeek = "last week",
+  ThisMonth = "this month",
+}
 
+export const AppBar = ({ title }: AppBarProps) => {
+  const [selectedValue, setSelectedValue] = useState<Timeframe | string>(
+    Timeframe.Today
+  );
+  const navigate = useNavigate();
   const location = useLocation();
-  const handleSelectChange = (event: SelectChangeEvent<string | number>) => {
-    const newValue = event.target.value as string;
+
+  const handleSelectChange = (event: SelectChangeEvent<string>) => {
+    const newValue = event.target.value;
     setSelectedValue(newValue);
-    // Update the URL query parameter
     const searchParams = new URLSearchParams(location.search);
     searchParams.set("timeframe", newValue);
     navigate(`${location.pathname}?${searchParams.toString()}`);
   };
+
+  const selectOptions = useMemo(
+    () =>
+      Object.values(Timeframe).map((value) => (
+        <MenuItem key={value} value={value}>
+          {value.charAt(0).toUpperCase() + value.slice(1)}
+        </MenuItem>
+      )),
+    []
+  );
+
   return (
     <StyledAppBar>
       <Typography
-        component="h1"
+        component={Link}
+        to="/"
         variant="h6"
         color="inherit"
         noWrap
-        sx={{ flexGrow: 1, alignSelf: "center" }}
+        sx={{ flexGrow: 1, alignSelf: "center", textDecoration: "none" }}
       >
         {title}
       </Typography>
       <FormControl variant="outlined" sx={{ minWidth: 120, marginLeft: 2 }}>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          label="Age"
+          labelId="timeframe-select-label"
+          id="timeframe-select"
           value={selectedValue}
           onChange={handleSelectChange}
           sx={{ color: "inherit" }}
           displayEmpty
-          inputProps={{ "aria-label": "Without label" }}
+          inputProps={{ "aria-label": "Timeframe" }}
         >
-          <MenuItem value={"today"}>Today</MenuItem>
-          <MenuItem value={"yesterday"}>Yesterday</MenuItem>
-          <MenuItem value={"last week"}>Last 7 days</MenuItem>
-          <MenuItem value={"this month"}>This month</MenuItem>
+          {selectOptions}
         </Select>
       </FormControl>
     </StyledAppBar>
