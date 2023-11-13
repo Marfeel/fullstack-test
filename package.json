@@ -7,6 +7,7 @@
     "@fontsource/roboto": "^4.5.8",
     "@mui/material": "^5.11.11",
     "@mui/styled-engine-sc": "^5.11.11",
+    "@tanstack/react-query": "^5.8.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -17,6 +18,7 @@
     "@types/react-dom": "^18.0.11",
     "@types/styled-components": "^5.1.26",
     "apexcharts": "^3.37.1",
+    "cors": "^2.8.5",
     "craco-alias": "^3.0.1",
     "express": "^4.18.2",
     "localforage": "^1.10.0",
@@ -25,6 +27,7 @@
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
     "react-dom": "^18.2.0",
+    "react-intersection-observer": "^9.5.3",
     "react-router-dom": "^6.8.2",
     "react-scripts": "5.0.1",
     "sort-by": "^1.2.0",
@@ -40,7 +43,7 @@
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "storybook": "DISABLE_ESLINT_PLUGIN=true start-storybook -p 6006 -s public",
+    "storybook": "cross-env DISABLE_ESLINT_PLUGIN=true start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "postinstall": "node build-dataset.js > server/dataset.json"
   },
@@ -83,7 +86,9 @@
     "@storybook/preset-create-react-app": "^4.1.2",
     "@storybook/react": "^6.5.16",
     "@storybook/testing-library": "^0.0.13",
+    "@types/cors": "^2.8.16",
     "babel-plugin-named-exports-order": "^0.0.2",
+    "cross-env": "^7.0.3",
     "prop-types": "^15.8.1",
     "webpack": "^5.75.0"
   }
