@@ -1,5 +1,5 @@
 import { apiUrl } from "../config";
-import { ArticleData, PaginatedResponseBody, TrafficData } from "../interfaces";
+import { ArticleData, PaginatedResponseBody } from "../interfaces";
 
 export const getAllData = async (
   page: number | undefined = 1,

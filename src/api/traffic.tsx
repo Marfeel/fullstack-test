@@ -7,9 +7,10 @@ export const getTotalTraffic = async ({
   timeframe: string | null;
   articleId?: string;
 }) => {
-  const response = await fetch(
-    `${apiUrl}/traffic?timeframe=${timeframe ?? "today"}`
-  );
+  const searchParams = new URLSearchParams();
+  searchParams.set("timeframe", timeframe ?? "today");
+  if (articleId) searchParams.set("articleId", articleId);
+  const response = await fetch(`${apiUrl}/traffic?${searchParams.toString()}`);
   if (!response.ok) {
     throw new Error("Network response was not ok");
   }
