@@ -1,0 +1,26 @@
+### Manual testing for the API. Use 'REST Client' extension for VSCode
+
+### Root
+GET http://localhost:3001/api/
+
+### GET a single article by id, filtererd by time (today, yesterday, week, month)
+GET http://localhost:3001/api/articles/1c3a243c-e6aa-43c1-ad30-9b19b67a989c
+
+### GET a single article by id, filtererd by time (today, yesterday, week, month)
+GET http://localhost:3001/api/articles/1c3a243c-e6aa-43c1-ad30-9b19b67a989c?time=this month
+
+### get ALL article data
+GET http://localhost:3001/api/articles
+
+### get ALL article data + filter by time (today, yesterday, week, month) + first page
+GET http://localhost:3001/api/articles?time=last 7 days
+
+### get ALL article data + filter by time (today, yesterday, week, month) + second page
+GET http://localhost:3001/api/articles?time=last 7 days&page=2
+
+### get ALL traffic (last month)
+GET http://localhost:3001/api/traffic
+
+### get ALL traffic (last month) + filter by time (today, yesterday, week, month)
+GET http://localhost:3001/api/traffic?time=this month
+
